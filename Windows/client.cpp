@@ -4,6 +4,13 @@
 
 #pragma comment(lib, "ws2_32.lib")
 
+void updateProgress(int current, int total)
+{
+    float progress = (static_cast<float>(current) / total) * 100.0f;
+    std::cout << "Progress: " << progress << "%\r" << std::flush;
+}
+
+
 int main()
 {
     // Initialize Winsock
@@ -42,6 +49,8 @@ int main()
     {
         file.write(buffer, bytesReceived);
         receivedBytesTotal += bytesReceived;
+        updateProgress(receivedBytesTotal, totalFileSize);
+
     }
 
     std::cout << "\nFile received successfully!\n";
