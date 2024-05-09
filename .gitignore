@@ -1,0 +1,70 @@
+# Compiled Object files
+.slo
+.lo
+.o
+.obj
+
+# Precompiled Headers
+.gch
+.pch
+
+# Compiled Dynamic libraries
+.so
+.dylib
+.dll
+
+# Compiled Static libraries
+.lai
+.la
+.a
+.lib
+
+# Executables
+.exe
+.out
+.app
+
+# CMake files
+CMakeFiles
+CMakeCache.txt
+CMakeScripts
+CMakeTmp
+CPackConfig.cmake
+CPackSourceConfig.cmake
+cmake_install.cmake
+install_manifest.txt
+Makefile
+Makefile.in
+CMakeLists.txt.user
+CMakeOutput.log
+CMakeError.log
+
+# Sublime Text files
+.sublime-workspace
+
+# Visual Studio Code files
+.vscode
+
+# Eclipse files
+.project
+.cproject
+.settings
+
+# Xcode files
+.xcworkspace
+.xcodeproj
+
+# Intellij IDEA files
+.idea
+
+# CodeBlocks files
+.depend
+.layout
+.cbp
+
+# Turbo C++ files
+.tcb
+
+# macOS generated files
+.DS_Store
+*.exe

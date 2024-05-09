@@ -4,6 +4,8 @@
 
 #pragma comment(lib, "ws2_32.lib")
 
+#define BUFFER_SIZE 10240
+
 int main()
 {
     // Initialize Winsock
@@ -13,17 +15,21 @@ int main()
     // Create a socket
     SOCKET serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 
+    int PORT;
+    std::cout << "Enter Server PORT: ";
+    std::cin >> PORT;
+
     // Bind the socket
     sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_addr.s_addr = INADDR_ANY;
-    serverAddr.sin_port = htons(8080);
+    serverAddr.sin_port = htons(PORT);
     bind(serverSocket, (sockaddr *)&serverAddr, sizeof(serverAddr));
 
     // Listen for connections
     listen(serverSocket, SOMAXCONN);
 
-    std::cout << "Server is listening on port 8080...\n";
+    std::cout << "Server is listening on port " << PORT << "...\n";
 
     // Accept a client socket
     SOCKET clientSocket;
@@ -50,10 +56,9 @@ int main()
     send(clientSocket, (char *)&totalFileSize, sizeof(totalFileSize), 0);
     // Send file contents
 
-    const int blockSize = 1024;
-    char buffer[blockSize];
+    char buffer[BUFFER_SIZE];
     int bytesRead;
-    while ((bytesRead = file.readsome(buffer, blockSize)) > 0)
+    while ((bytesRead = file.readsome(buffer, BUFFER_SIZE)) > 0)
     {
         int bytesSent = send(clientSocket, buffer, bytesRead, 0);
         if (bytesSent < 0)

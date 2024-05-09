@@ -4,12 +4,13 @@
 
 #pragma comment(lib, "ws2_32.lib")
 
+#define BUFFER_SIZE 10240
+
 void updateProgress(int current, int total)
 {
     float progress = (static_cast<float>(current) / total) * 100.0f;
     std::cout << "Progress: " << progress << "%\r" << std::flush;
 }
-
 
 int main()
 {
@@ -20,11 +21,21 @@ int main()
     // Create a socket
     SOCKET clientSocket = socket(AF_INET, SOCK_STREAM, 0);
 
+    // Get IP and Port
+    int PORT;
+    std::string IP;
+
+    std::cout << "Enter Server IP: ";
+    std::cin >> IP;
+
+    std::cout << "Enter Server PORT: ";
+    std::cin >> PORT;
+
     // Connect to server
     sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = htons(8080);
-    serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    serverAddr.sin_port = htons(PORT);
+    serverAddr.sin_addr.s_addr = inet_addr(IP.c_str());
     connect(clientSocket, (sockaddr *)&serverAddr, sizeof(serverAddr));
 
     std::cout << "Connected to server!\n";
@@ -42,7 +53,7 @@ int main()
     }
 
     // Receive file contents
-    char buffer[1024];
+    char buffer[BUFFER_SIZE];
     int bytesReceived;
     int receivedBytesTotal = 0;
     while ((bytesReceived = recv(clientSocket, buffer, sizeof(buffer), 0)) > 0)
@@ -50,7 +61,6 @@ int main()
         file.write(buffer, bytesReceived);
         receivedBytesTotal += bytesReceived;
         updateProgress(receivedBytesTotal, totalFileSize);
-
     }
 
     std::cout << "\nFile received successfully!\n";
